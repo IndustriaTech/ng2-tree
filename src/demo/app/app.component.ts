@@ -45,11 +45,11 @@ declare const alertify: any;
           <button (click)="handleActionOnFFS(12, 'remove')">Remove 'nano'</button>
           <button (click)="handleActionOnFFS(52, 'reloadChildren')">Reload Music's children</button>
           <button (click)="setChildrenFFS(36)">Set 'etc' children</button>
-          <button (click)="addChildFFS(2, { value: 'ping'})">Add a child with name 'ping' to 'bin'</button>
-          <button (click)="addChildFFS(22, { value: 'lost'})">Add a child with name 'lost' to 'lost+found'</button>
-          <button (click)="addChildFFS(22, { value: 'found', children: []})">Add a child with name 'found' to 'lost+found'</button>
-          <button (click)="addChildFFS(36, { value: 'found', children: []})">Add a child with name 'found' to 'etc'</button>
-          <button (click)="addChildFFS(78, { value: 'Voodo People'})">Add a child with name 'Voodo People' to '2Cellos'</button>
+          <button (click)="addChildFFS(2, { value: 'ping' })">Add a child with name 'ping' to 'bin'</button>
+          <button (click)="addChildFFS(22, { value: 'lost' })">Add a child with name 'lost' to 'lost+found'</button>
+          <button (click)="addChildFFS(22, { value: 'found', children: [] })">Add a child with name 'found' to 'lost+found'</button>
+          <button (click)="addChildFFS(36, { value: 'found', children: [] })">Add a child with name 'found' to 'etc'</button>
+          <button (click)="addChildFFS(78, { value: 'Voodo People' })">Add a child with name 'Voodo People' to '2Cellos'</button>
         </div>
         <tree #treeFFS
           [tree]="ffs"
