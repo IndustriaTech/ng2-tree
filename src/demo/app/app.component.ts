@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
 import { NodeEvent, TreeModel, RenamableNode, Ng2TreeSettings } from '../../../index';
 
 declare const alertify: any;
@@ -48,7 +49,16 @@ declare const alertify: any;
         </tree>
       </div>
     </div>
-  `,
+    <context-menu>
+      <ng-template contextMenuItem let-item>
+        <a (click)="logMessage('Hi, ' + item.value, item, $event)">Say hi!</a>
+      </ng-template>
+      <ng-template contextMenuItem divider="true"></ng-template>
+      <ng-template contextMenuItem let-item>
+        <a (click)="logMessage('Buy ' + item.value + ' with id: ' + item.id, item, $event)">Bye, {{item?.value}}</a>
+      </ng-template>
+    </context-menu>
+    `,
   styles: [`
     .tree-demo-app {
       margin: auto;
@@ -85,6 +95,7 @@ declare const alertify: any;
   `]
 })
 export class AppComponent implements OnInit {
+  @ViewChild(ContextMenuComponent) public contextMenu: ContextMenuComponent;
   public settings: Ng2TreeSettings = {
     rootIsVisible: false
   };
@@ -160,7 +171,8 @@ export class AppComponent implements OnInit {
       templates: {
         node: '<i class="fa fa-folder-o"></i>',
         leaf: '<i class="fa fa-file-o"></i>'
-      }
+      },
+      menu: this.onContextMenu.bind(this)
     },
     children: [
       {
@@ -347,6 +359,9 @@ export class AppComponent implements OnInit {
     ]
   };
 
+  constructor(private contextMenuService: ContextMenuService) {
+  }
+
   private static logEvent(e: NodeEvent, message: string): void {
     console.log(e);
     alertify.message(`${message}: ${e.node.value}`);
@@ -393,6 +408,15 @@ export class AppComponent implements OnInit {
         ]
       };
     }, 2000);
+  }
+  public onContextMenu($event: MouseEvent, item: any): void {
+    this.contextMenuService.show.next({
+      contextMenu: this.contextMenu,
+      event: $event,
+      item: item
+    });
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   public onNodeRemoved(e: NodeEvent): void {

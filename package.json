@@ -68,6 +68,7 @@
     "@types/jasmine": "2.5.51",
     "@types/node": "7.0.29",
     "alertifyjs": "1.10.0",
+    "ngx-contextmenu": "^1.2.0",
     "async": "2.4.1",
     "codelyzer": "3.0.1",
     "conventional-changelog": "1.1.3",
