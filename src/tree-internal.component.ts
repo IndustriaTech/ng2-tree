@@ -121,8 +121,13 @@ export class TreeInternalComponent implements OnInit {
     }
 
     if (EventUtils.isRightButtonClicked(e)) {
-      this.isRightMenuVisible = !this.isRightMenuVisible;
-      this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+      let menu = this.tree.getMenuCustomFunction();
+      if (menu && typeof menu === 'function') {
+        menu(e, this.tree.node);
+      } else {
+        this.isRightMenuVisible = !this.isRightMenuVisible;
+        this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+      }
     }
     e.preventDefault();
   }
@@ -133,10 +138,15 @@ export class TreeInternalComponent implements OnInit {
     }
 
     if (EventUtils.isLeftButtonClicked(e)) {
-      this.isLeftMenuVisible = !this.isLeftMenuVisible;
-      this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
-      if (this.isLeftMenuVisible) {
-        e.preventDefault();
+      let menu = this.tree.getMenuCustomFunction();
+      if (menu && typeof menu === 'function') {
+        menu(e, this.tree.node);
+      } else {
+        this.isLeftMenuVisible = !this.isLeftMenuVisible;
+        this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+        if (this.isLeftMenuVisible) {
+          e.preventDefault();
+        }
       }
     }
   }

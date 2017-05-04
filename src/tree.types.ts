@@ -75,6 +75,9 @@ export class TreeModelSettings {
    */
   public rightMenu?: boolean;
 
+  /* "menu" - set custom function to be called when menu is open. This function will be called with event and node as arguments */
+  public menu?: Function;
+
   /**
    * "static" property when set to true makes it impossible to drag'n'drop tree or call a menu on it.
    * @name TreeModelSettings#static

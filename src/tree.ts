@@ -296,6 +296,14 @@ export class Tree {
   }
 
   /**
+   * Get custom menu function from node's settings
+   * @returns {Function} A function which should be called when menu is opened.
+   */
+  public getMenuCustomFunction(): Function {
+    return _.get(this.node.settings, 'menu', null);
+  }
+
+  /**
    * Check whether this tree is "Leaf" or not.
    * @returns {boolean} A flag indicating whether or not this tree is a "Leaf".
    */
