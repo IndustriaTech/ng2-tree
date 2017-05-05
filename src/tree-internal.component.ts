@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Rx';
   <ul class="tree" *ngIf="tree" [ngClass]="{rootless: isRootHidden()}">
     <li>
       <div class="value-container"
-        [ngClass]="{rootless: isRootHidden()}"
+        [ngClass]="{rootless: isRootHidden(), active: isActive}"
         (contextmenu)="showRightMenu($event)"
         [nodeDraggable]="element"
         [tree]="tree">
@@ -59,6 +59,7 @@ export class TreeInternalComponent implements OnInit {
   public settings: TreeTypes.Ng2TreeSettings;
 
   public isSelected = false;
+  public isActive = false;
   public isRightMenuVisible = false;
   public isLeftMenuVisible = false;
 
@@ -74,10 +75,14 @@ export class TreeInternalComponent implements OnInit {
       .subscribe(() => {
         this.isRightMenuVisible = false;
         this.isLeftMenuVisible = false;
+        this.isActive = false;
       });
 
     this.treeService.unselectStream(this.tree)
       .subscribe(() => this.isSelected = false);
+
+    this.treeService.deactivateStream(this.tree)
+      .subscribe(() => this.isActive = false);
 
     this.treeService.draggedStream(this.tree, this.element)
       .subscribe((e: NodeDraggableEvent) => {
@@ -112,7 +117,13 @@ export class TreeInternalComponent implements OnInit {
     if (EventUtils.isLeftButtonClicked(e)) {
       this.isSelected = true;
       this.treeService.fireNodeSelected(this.tree);
+      this.onNodeActivated(e);
     }
+  }
+
+  public onNodeActivated(e: MouseEvent): void {
+    this.isActive = true;
+    this.treeService.fireNodeActivated(this.tree);
   }
 
   public showRightMenu(e: MouseEvent): void {
@@ -126,8 +137,10 @@ export class TreeInternalComponent implements OnInit {
         menu(e, this.tree.node);
       } else {
         this.isRightMenuVisible = !this.isRightMenuVisible;
-        this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
       }
+
+      this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+      this.onNodeActivated(e);
     }
     e.preventDefault();
   }
@@ -143,11 +156,13 @@ export class TreeInternalComponent implements OnInit {
         menu(e, this.tree.node);
       } else {
         this.isLeftMenuVisible = !this.isLeftMenuVisible;
-        this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
         if (this.isLeftMenuVisible) {
           e.preventDefault();
         }
       }
+
+      this.nodeMenuService.hideMenuForAllNodesExcept(this.element);
+      this.onNodeActivated(e);
     }
   }
 
@@ -217,4 +232,5 @@ export class TreeInternalComponent implements OnInit {
   public isRootHidden(): boolean {
     return this.tree.isRoot() && !this.settings.rootIsVisible;
   }
+
 }

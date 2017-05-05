@@ -3,6 +3,7 @@ import {
   NodeRenamedEvent,
   NodeCreatedEvent,
   NodeSelectedEvent,
+  NodeActivatedEvent,
   NodeMovedEvent,
   NodeExpandedEvent,
   NodeCollapsedEvent
@@ -21,6 +22,7 @@ export class TreeService {
   public nodeRenamed$: Subject<NodeRenamedEvent> = new Subject<NodeRenamedEvent>();
   public nodeCreated$: Subject<NodeCreatedEvent> = new Subject<NodeCreatedEvent>();
   public nodeSelected$: Subject<NodeSelectedEvent> = new Subject<NodeSelectedEvent>();
+  public nodeActivated$: Subject<NodeActivatedEvent> = new Subject<NodeActivatedEvent>();
   public nodeExpanded$: Subject<NodeExpandedEvent> = new Subject<NodeExpandedEvent>();
   public nodeCollapsed$: Subject<NodeCollapsedEvent> = new Subject<NodeCollapsedEvent>();
 
@@ -30,6 +32,10 @@ export class TreeService {
 
   public unselectStream(tree: Tree): Observable<any> {
     return this.nodeSelected$.filter((e: NodeSelectedEvent) => tree !== e.node);
+  }
+
+  public deactivateStream(tree: Tree): Observable<any> {
+    return this.nodeActivated$.filter((e: NodeActivatedEvent) => tree !== e.node);
   }
 
   public fireNodeRemoved(tree: Tree): void {
@@ -42,6 +48,10 @@ export class TreeService {
 
   public fireNodeSelected(tree: Tree): void {
     this.nodeSelected$.next(new NodeSelectedEvent(tree));
+  }
+
+  public fireNodeActivated(tree: Tree): void {
+    this.nodeActivated$.next(new NodeActivatedEvent(tree));
   }
 
   public fireNodeRenamed(oldValue: RenamableNode | string, tree: Tree): void {

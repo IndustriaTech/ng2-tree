@@ -99,7 +99,17 @@ tree-internal .tree .node-value:after {
   transition: width 0.3s;
 }
 
-tree-internal .tree .node-value:hover:after {
+tree-internal .tree .value-container:hover .node-value:after,
+tree-internal .tree .value-container.active .node-value:after {
+  width: 100%;
+  background-color: #757575;
+}
+
+tree-internal .tree .value-container:hover .node-selected:after {
+  background-color: #212121;
+}
+
+tree-internal .tree .node-selected:after {
   width: 100%;
 }
 
@@ -112,10 +122,6 @@ tree-internal .tree .node-left-menu {
 tree-internal .tree .node-left-menu span:before {
   content: '\2026';
   color: #757575;
-}
-
-tree-internal .tree .node-selected:after {
-  width: 100%;
 }
 
 tree-internal .tree .folding {
