@@ -345,6 +345,15 @@ export class Tree {
   }
 
   /**
+   * Check whether or not this node in a tree can be draged.
+   * @returns {boolean} A flag indicating whether or not this node is dragable.
+   */
+  public isDragable(): boolean {
+    return _.get(this.node.settings, 'dragable', false);
+  }
+
+
+  /**
    * Check whether this tree is "Leaf" or not.
    * @returns {boolean} A flag indicating whether or not this tree is a "Leaf".
    */

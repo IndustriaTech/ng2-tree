@@ -61,6 +61,7 @@ export class TreeModelSettings {
 
   /**
    * "leftMenu" property when set to true makes left menu available.
+   * it's value doesn't mater when static option is set to true
    * @name TreeModelSettings#leftMenu
    * @type boolean
    * @default false
@@ -69,11 +70,22 @@ export class TreeModelSettings {
 
   /**
    * "rightMenu" property when set to true makes right menu available.
+   * it's value doesn't mater when static option is set to true
    * @name TreeModelSettings#rightMenu
    * @type boolean
    * @default true
    */
   public rightMenu?: boolean;
+
+  /**
+   * "dragable" property when set to true allows you to drag a node, when set to false you can only drop nodes over it
+   * it can be overrided by static option
+   * it's value doesn't mater when static option is set to true
+   * @mane TreeModelSettings#dragable
+   * @type boolean
+   * @default true
+   */
+  public dragable?: boolean;
 
   /**
    * "static" property when set to true makes it impossible to drag'n'drop tree or call a menu on it.
@@ -84,7 +96,7 @@ export class TreeModelSettings {
   public static?: boolean;
 
   public static merge(sourceA: TreeModel, sourceB: TreeModel): TreeModelSettings {
-    return _defaultsDeep({}, _get(sourceA, 'settings'), _get(sourceB, 'settings'), {static: false, leftMenu: false, rightMenu: true});
+    return _defaultsDeep({}, _get(sourceA, 'settings'), _get(sourceB, 'settings'), {static: false, leftMenu: false, rightMenu: true, dragable: true});
   }
 }
 

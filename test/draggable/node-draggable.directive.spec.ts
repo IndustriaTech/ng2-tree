@@ -279,4 +279,6 @@ describe('NodeDraggableDirective', () => {
   });
 
   it('TODO: should not make tree draggable if it is static', () => {});
+
+  it('TODO: should not make tree draggable if dragable is false, but it should be possible to drop', () => {});
 });

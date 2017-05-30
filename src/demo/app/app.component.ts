@@ -205,7 +205,10 @@ export class AppComponent implements OnInit {
         id: 13,
         children: [
           {
-            value: 'grub',
+            value: 'grub - not a dragable node',
+            settings: {
+              dragable: false
+            },
             id: 14,
             children: [
               {value: 'fonts', id: 15},
